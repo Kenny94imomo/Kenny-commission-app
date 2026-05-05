@@ -151,7 +151,7 @@ export default function CommissionPage() {
             <select
               value={selectedId}
               onChange={(e) => handleLocationChange(e.target.value)}
-              style={{ width: "100%", padding: "8px 12px", fontSize: "14px", borderRadius: "8px", border: "1px solid #ccc", background: "white" }}
+              style={{ width: "100%", padding: "8px 12px", fontSize: "14px", borderRadius: "8px", border: "1px solid #ccc", background: "white", appearance: "auto", paddingRight: "32px" }}
             >
               {locations.map((loc) => (
                 <option key={loc.id} value={loc.id}>{loc.name}</option>
