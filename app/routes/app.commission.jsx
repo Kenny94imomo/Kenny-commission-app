@@ -111,15 +111,18 @@ export default function CommissionPage() {
     <s-page heading="百貨抽成計算">
       <s-section heading="櫃位設定">
         <s-stack direction="block" gap="base">
-          <s-select
-            label="選擇櫃位"
+          <div>
+          <label style={{display: "block", marginBottom: "4px", fontSize: "14px"}}>選擇櫃位</label>
+           <select
             value={selectedId}
-            onchange={(e) => handleLocationChange(e.target.value)}
-          >
-            {locations.map((loc) => (
-              <option key={loc.id} value={loc.id}>{loc.name}</option>
-            ))}
-          </s-select>
+            onChange={(e) => handleLocationChange(e.target.value)}
+            style={{width: "100%", padding: "8px", fontSize: "14px", borderRadius: "4px", border: "1px solid #ccc"}}
+           >
+           {locations.map((loc) => (
+           <option key={loc.id} value={loc.id}>{loc.name}</option>
+           ))}
+          </select>
+          </div>
           <s-text-field
             label="百貨抽成比例 (%)"
             value={String(rate)}
