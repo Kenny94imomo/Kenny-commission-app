@@ -20,6 +20,7 @@ export const loader = async ({ request }) => {
     }
   `);
   const locJson = await locResponse.json();
+  console.log("locations raw:", JSON.stringify(locJson.data.locations));
   const locations = locJson.data.locations.edges.map(({ node }) => ({
     id: node.id,
     name: node.name,
