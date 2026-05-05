@@ -44,6 +44,11 @@ export const loader = async ({ request }) => {
             totalPriceSet { shopMoney { amount currencyCode } }
             createdAt
             displayFinancialStatus
+            fulfillments {
+              location {
+                id
+              }
+            }
           }
         }
       }
@@ -57,6 +62,7 @@ export const loader = async ({ request }) => {
     currency: node.totalPriceSet.shopMoney.currencyCode,
     createdAt: node.createdAt,
     status: node.displayFinancialStatus,
+    locationId: node.fulfillments?.[0]?.location?.id || null,
   }));
 
   return routerData({ locations, rateMap, orders, shop: session.shop });
@@ -82,7 +88,6 @@ export default function CommissionPage() {
   const { locations, rateMap, orders } = useLoaderData();
   const fetcher = useFetcher();
 
-  console.log("locations in component:", locations);
   const [selectedId, setSelectedId] = useState(locations[0]?.id || "");
   const selectedLocation = locations.find((l) => l.id === selectedId);
   const [rate, setRate] = useState(rateMap[selectedId] ?? 0);
@@ -102,8 +107,12 @@ export default function CommissionPage() {
     setSaved(true);
   };
 
+  const filteredOrders = selectedId
+    ? orders.filter((o) => o.locationId === selectedId)
+    : orders;
+
   const r = rate / 100;
-  const totalRevenue = orders.reduce((sum, o) => sum + o.amount, 0);
+  const totalRevenue = filteredOrders.reduce((sum, o) => sum + o.amount, 0);
   const commissionAmount = totalRevenue * r;
   const netRevenue = totalRevenue - commissionAmount;
 
@@ -112,16 +121,16 @@ export default function CommissionPage() {
       <s-section heading="櫃位設定">
         <s-stack direction="block" gap="base">
           <div>
-          <label style={{display: "block", marginBottom: "4px", fontSize: "14px"}}>選擇櫃位</label>
-           <select
-            value={selectedId}
-            onChange={(e) => handleLocationChange(e.target.value)}
-            style={{width: "100%", padding: "8px", fontSize: "14px", borderRadius: "4px", border: "1px solid #ccc"}}
-           >
-           {locations.map((loc) => (
-           <option key={loc.id} value={loc.id}>{loc.name}</option>
-           ))}
-          </select>
+            <label style={{display: "block", marginBottom: "4px", fontSize: "14px"}}>選擇櫃位</label>
+            <select
+              value={selectedId}
+              onChange={(e) => handleLocationChange(e.target.value)}
+              style={{width: "100%", padding: "8px", fontSize: "14px", borderRadius: "4px", border: "1px solid #ccc"}}
+            >
+              {locations.map((loc) => (
+                <option key={loc.id} value={loc.id}>{loc.name}</option>
+              ))}
+            </select>
           </div>
           <s-text-field
             label="百貨抽成比例 (%)"
@@ -172,16 +181,24 @@ export default function CommissionPage() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} style={{ borderBottom: "1px solid #f1f2f3" }}>
-                <td style={{ padding: "8px" }}>{order.name}</td>
-                <td style={{ textAlign: "right", padding: "8px" }}>{order.currency} {order.amount.toFixed(2)}</td>
-                <td style={{ textAlign: "right", padding: "8px" }}>{order.currency} {(order.amount * r).toFixed(2)}</td>
-                <td style={{ textAlign: "right", padding: "8px" }}>{order.currency} {(order.amount * (1 - r)).toFixed(2)}</td>
-                <td style={{ padding: "8px" }}>{new Date(order.createdAt).toLocaleDateString("zh-TW")}</td>
-                <td style={{ padding: "8px" }}>{order.status}</td>
+            {filteredOrders.length === 0 ? (
+              <tr>
+                <td colSpan={6} style={{ padding: "16px", textAlign: "center", color: "#888" }}>
+                  此櫃位沒有訂單記錄
+                </td>
               </tr>
-            ))}
+            ) : (
+              filteredOrders.map((order) => (
+                <tr key={order.id} style={{ borderBottom: "1px solid #f1f2f3" }}>
+                  <td style={{ padding: "8px" }}>{order.name}</td>
+                  <td style={{ textAlign: "right", padding: "8px" }}>{order.currency} {order.amount.toFixed(2)}</td>
+                  <td style={{ textAlign: "right", padding: "8px" }}>{order.currency} {(order.amount * r).toFixed(2)}</td>
+                  <td style={{ textAlign: "right", padding: "8px" }}>{order.currency} {(order.amount * (1 - r)).toFixed(2)}</td>
+                  <td style={{ padding: "8px" }}>{new Date(order.createdAt).toLocaleDateString("zh-TW")}</td>
+                  <td style={{ padding: "8px" }}>{order.status}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </s-section>
