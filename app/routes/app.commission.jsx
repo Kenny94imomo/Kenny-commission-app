@@ -87,12 +87,18 @@ export default function CommissionPage() {
   const { locations, rateMap, orders } = useLoaderData();
   const fetcher = useFetcher();
 
+  const today = new Date();
+  const firstOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const toDateStr = today.toISOString().split("T")[0];
+  const fromDateStr = firstOfMonth.toISOString().split("T")[0];
+
   const [selectedId, setSelectedId] = useState(locations[0]?.id || "");
   const selectedLocation = locations.find((l) => l.id === selectedId);
   const [rate, setRate] = useState(rateMap[selectedId] ?? 0);
   const [saved, setSaved] = useState(false);
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
+  const [dateFrom, setDateFrom] = useState(fromDateStr);
+  const [dateTo, setDateTo] = useState(toDateStr);
+  const [quickSelect, setQuickSelect] = useState("本月至今");
 
   const handleLocationChange = (id) => {
     setSelectedId(id);
@@ -107,6 +113,66 @@ export default function CommissionPage() {
     );
     setSaved(true);
   };
+
+  const quickOptions = [
+    {
+      label: "今天",
+      getDates: () => {
+        const d = new Date().toISOString().split("T")[0];
+        return [d, d];
+      },
+    },
+    {
+      label: "昨天",
+      getDates: () => {
+        const d = new Date();
+        d.setDate(d.getDate() - 1);
+        const s = d.toISOString().split("T")[0];
+        return [s, s];
+      },
+    },
+    {
+      label: "本週至今",
+      getDates: () => {
+        const d = new Date();
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        const from = new Date(new Date().setDate(diff)).toISOString().split("T")[0];
+        return [from, new Date().toISOString().split("T")[0]];
+      },
+    },
+    {
+      label: "本月至今",
+      getDates: () => {
+        const d = new Date();
+        return [
+          new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split("T")[0],
+          d.toISOString().split("T")[0],
+        ];
+      },
+    },
+    {
+      label: "本季至今",
+      getDates: () => {
+        const d = new Date();
+        const q = Math.floor(d.getMonth() / 3);
+        return [
+          new Date(d.getFullYear(), q * 3, 1).toISOString().split("T")[0],
+          d.toISOString().split("T")[0],
+        ];
+      },
+    },
+    {
+      label: "今年至今",
+      getDates: () => {
+        const d = new Date();
+        return [
+          new Date(d.getFullYear(), 0, 1).toISOString().split("T")[0],
+          d.toISOString().split("T")[0],
+        ];
+      },
+    },
+  ];
 
   const filteredOrders = orders.filter((o) => {
     if (o.locationId !== selectedId) return false;
@@ -182,13 +248,38 @@ export default function CommissionPage() {
       </s-section>
 
       <s-section heading="篩選日期">
+        <div style={{ marginBottom: "12px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          {quickOptions.map(({ label, getDates }) => (
+            <button
+              key={label}
+              onClick={() => {
+                const [f, t] = getDates();
+                setDateFrom(f);
+                setDateTo(t);
+                setQuickSelect(label);
+              }}
+              style={{
+                padding: "6px 14px",
+                fontSize: "13px",
+                borderRadius: "20px",
+                border: `1px solid ${quickSelect === label ? "#008060" : "#ccc"}`,
+                background: quickSelect === label ? "#e3f1df" : "white",
+                color: quickSelect === label ? "#008060" : "#333",
+                cursor: "pointer",
+                fontWeight: quickSelect === label ? "600" : "400",
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
           <div>
             <label style={{ display: "block", marginBottom: "6px", fontSize: "14px", fontWeight: "500" }}>開始日期</label>
             <input
               type="date"
               value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
+              onChange={(e) => { setDateFrom(e.target.value); setQuickSelect(""); }}
               style={{ width: "100%", padding: "8px 12px", fontSize: "14px", borderRadius: "8px", border: "1px solid #ccc", boxSizing: "border-box" }}
             />
           </div>
@@ -197,7 +288,7 @@ export default function CommissionPage() {
             <input
               type="date"
               value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
+              onChange={(e) => { setDateTo(e.target.value); setQuickSelect(""); }}
               style={{ width: "100%", padding: "8px 12px", fontSize: "14px", borderRadius: "8px", border: "1px solid #ccc", boxSizing: "border-box" }}
             />
           </div>
@@ -205,7 +296,7 @@ export default function CommissionPage() {
       </s-section>
 
       <s-section heading={`${selectedLocation?.name || ""} 營收摘要`}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginBottom: "16px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginBottom: "12px" }}>
           <div style={{ background: "#f6f6f7", borderRadius: "8px", padding: "16px" }}>
             <div style={{ fontSize: "13px", color: "#6d7175", marginBottom: "4px" }}>總營收</div>
             <div style={{ fontSize: "22px", fontWeight: "600" }}>TWD {totalRevenue.toFixed(0)}</div>
