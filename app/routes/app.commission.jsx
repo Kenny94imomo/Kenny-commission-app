@@ -214,15 +214,18 @@ export default function CommissionPage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
           <div>
             <label style={{ display: "block", marginBottom: "6px", fontSize: "14px", fontWeight: "500" }}>選擇櫃位</label>
-            <select
-              value={selectedId}
-              onChange={(e) => handleLocationChange(e.target.value)}
-              style={{ width: "100%", padding: "8px 12px", fontSize: "14px", borderRadius: "8px", border: "1px solid #ccc", background: "white", appearance: "auto", paddingRight: "32px" }}
-            >
-              {locations.map((loc) => (
-                <option key={loc.id} value={loc.id}>{loc.name}</option>
-              ))}
-            </select>
+            <div style={{ position: "relative" }}>
+              <select
+                value={selectedId}
+                onChange={(e) => handleLocationChange(e.target.value)}
+                style={{ width: "100%", padding: "8px 36px 8px 12px", fontSize: "14px", borderRadius: "8px", border: "1px solid #ccc", background: "white", appearance: "none", WebkitAppearance: "none" }}
+              >
+                {locations.map((loc) => (
+                  <option key={loc.id} value={loc.id}>{loc.name}</option>
+                ))}
+              </select>
+              <span style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", fontSize: "12px", color: "#666" }}>▼</span>
+            </div>
           </div>
           <div>
             <label style={{ display: "block", marginBottom: "6px", fontSize: "14px", fontWeight: "500" }}>百貨抽成比例 (%)</label>
