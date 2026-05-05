@@ -114,7 +114,7 @@ export default function CommissionPage() {
           <s-select
             label="選擇櫃位"
             value={selectedId}
-            onChange={(e) => handleLocationChange(e.target.value)}
+            onchange={(e) => handleLocationChange(e.target.value)}
           >
             {locations.map((loc) => (
               <option key={loc.id} value={loc.id}>{loc.name}</option>
