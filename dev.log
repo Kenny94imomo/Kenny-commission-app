@@ -1,0 +1,40 @@
+╭─ info ───────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Using shopify.app.toml for default values:                                  │
+│                                                                              │
+│    • Org:             YC Group|Luxury Fashion                                │
+│    • App:             commission-app                                         │
+│    • Dev store:       commission-test-aos0rzej.myshopify.com                 │
+│    • Update URLs:     Yes                                                    │
+│                                                                              │
+│   You can pass `--reset` to your command to reset your app configuration.    │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Running pre-dev command: "npm exec prisma generate"Preparing dev preview on commission-test-aos0rzej.myshopify.comProxy server started on port 4040 GraphiQL server started on port 3457npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+✅ Ready, watching for changes in your app │ Access scopes auto-granted: write_metaobject_definitions, write_metaobjects, write_products└ Using URL: https://automatic-enigma-jjxqrvrv5jw4fj7rp-4040.app.github.devnpm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": SQLite database "dev.sqlite" at "file:dev.sqlite"
+
+2 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+  ➜  Local:   http://localhost:40369/
+  ➜  Network: use --host to expose
+[shopify-api/INFO] version 13.0.0, environment React Router
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
