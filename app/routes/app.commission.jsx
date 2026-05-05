@@ -82,6 +82,7 @@ export default function CommissionPage() {
   const { locations, rateMap, orders } = useLoaderData();
   const fetcher = useFetcher();
 
+  console.log("locations in component:", locations);
   const [selectedId, setSelectedId] = useState(locations[0]?.id || "");
   const selectedLocation = locations.find((l) => l.id === selectedId);
   const [rate, setRate] = useState(rateMap[selectedId] ?? 0);
