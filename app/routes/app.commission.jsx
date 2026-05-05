@@ -9,7 +9,7 @@ export const loader = async ({ request }) => {
 
   const locResponse = await admin.graphql(`
     query {
-      locations(first: 20) {
+      locations(first: 50, includeInactive: false) {
         edges {
           node {
             id
