@@ -14,27 +14,40 @@
 Running pre-dev command: "npm exec prisma generate"Preparing dev preview on commission-test-aos0rzej.myshopify.comProxy server started on port 4040 GraphiQL server started on port 3457npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
 ✅ Ready, watching for changes in your app │ Access scopes auto-granted: write_metaobject_definitions, write_metaobjects, write_products└ Using URL: https://automatic-enigma-jjxqrvrv5jw4fj7rp-4040.app.github.devnpm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
 Prisma schema loaded from prisma/schema.prisma
-Datasource "db": SQLite database "dev.sqlite" at "file:dev.sqlite"
+Error: Prisma schema validation - (get-config wasm)
+Error code: P1012
+error: Environment variable not found: DIRECT_URL.
+  -->  prisma/schema.prisma:14
+   | 
+13 |   url       = env("DATABASE_URL")
+14 |   directUrl = env("DIRECT_URL")
+   | 
 
-2 migrations found in prisma/migrations
+Validation Error Count: 1
+[Context: getConfig]
 
+Prisma CLI Version : 6.19.3
+── external error ──────────────────────────────────────────────────────────────
 
-No pending migrations to apply.
-npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
-  ➜  Local:   http://localhost:40369/
-  ➜  Network: use --host to expose
-[shopify-api/INFO] version 13.0.0, environment React Router
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
-[shopify-app/INFO] Authenticating admin request | {shop: commission-test-aos0rzej.myshopify.com}
+Error coming from `npm exec prisma migrate deploy`
+
+Command failed with exit code 1: npm exec prisma migrate deploy
+npm warn Unknown project config "shamefully-hoist". This will stop working in
+the next major version of npm.
+Error: Prisma schema validation - (get-config wasm)
+Error code: P1012
+error: Environment variable not found: DIRECT_URL.
+  -->  prisma/schema.prisma:14
+   |
+13 |   url       = env("DATABASE_URL")
+14 |   directUrl = env("DIRECT_URL")
+   |
+
+Validation Error Count: 1
+[Context: getConfig]
+
+Prisma CLI Version : 6.19.3
+Prisma schema loaded from prisma/schema.prisma
+
+────────────────────────────────────────────────────────────────────────────────
+
