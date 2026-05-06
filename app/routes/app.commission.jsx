@@ -163,6 +163,18 @@ export default function CommissionPage() {
       },
     },
     {
+        label: "上個月",
+        getDates: () => {
+         const d = new Date();
+         const firstOfLastMonth = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+         const lastOfLastMonth = new Date(d.getFullYear(), d.getMonth(), 0);
+         return [
+           firstOfLastMonth.toISOString().split("T")[0],
+           lastOfLastMonth.toISOString().split("T")[0],
+          ];
+        },
+    },
+    {
       label: "今年至今",
       getDates: () => {
         const d = new Date();
